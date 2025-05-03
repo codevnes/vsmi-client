@@ -67,6 +67,25 @@ export default function StockProfile({ symbol = "VNINDEX" }: StockProfileProps) 
     );
   }
 
+  // Check if profile exists
+  if (!stockData.profile) {
+    return (
+      <section aria-labelledby="stock-info-heading">
+        <Card>
+          <CardContent className="flex items-center justify-center py-16">
+            <div className="flex flex-col items-center space-y-3 text-center">
+              <Info className="h-8 w-8 text-red-500" />
+              <p className="text-red-500">Dữ liệu chi tiết cổ phiếu chưa có sẵn</p>
+              <p className="text-sm text-gray-500 dark:text-gray-400">
+                Vui lòng thử lại sau
+              </p>
+            </div>
+          </CardContent>
+        </Card>
+      </section>
+    );
+  }
+
   // Determine if stock is up or down
   const isPositive = stockData.profile.profit > 0;
   
@@ -103,8 +122,8 @@ export default function StockProfile({ symbol = "VNINDEX" }: StockProfileProps) 
                           <ArrowDown className="h-4 w-4 mr-1" />
                         )}
                         <span className="font-medium">
-                          {stockData.profile.profit.toFixed(2)} 
-                          {stockData.profile.price > 0 && (
+                          {stockData.profile.profit !== undefined ? stockData.profile.profit.toFixed(2) : '0.00'} 
+                          {stockData.profile.price > 0 && stockData.profile.profit !== undefined && (
                             ` (${((stockData.profile.profit / (stockData.profile.price - stockData.profile.profit)) * 100).toFixed(2)}%)`
                           )}
                         </span>
@@ -119,7 +138,7 @@ export default function StockProfile({ symbol = "VNINDEX" }: StockProfileProps) 
                         <div className="text-xs uppercase text-gray-500 dark:text-gray-400 font-medium tracking-wider">Khối lượng</div>
                         <BarChart3 className="h-4 w-4 text-blue-500 dark:text-blue-400" />
                       </div>
-                      <div className="text-lg font-semibold dark:text-white">{(stockData.profile.volume / 1000000).toFixed(2)}M</div>
+                      <div className="text-lg font-semibold dark:text-white">{stockData.profile.volume !== undefined ? (stockData.profile.volume / 1000000).toFixed(2) : '0.00'}M</div>
                     </div>
                     
                     <div className="p-4 rounded-xl border border-gray-100 dark:border-gray-700 bg-white dark:bg-gray-800 shadow-sm">
@@ -127,7 +146,7 @@ export default function StockProfile({ symbol = "VNINDEX" }: StockProfileProps) 
                         <div className="text-xs uppercase text-gray-500 dark:text-gray-400 font-medium tracking-wider">P/E</div>
                         <BarChart4 className="h-4 w-4 text-purple-500 dark:text-purple-400" />
                       </div>
-                      <div className="text-lg font-semibold dark:text-white">{stockData.profile.pe.toFixed(2)}</div>
+                      <div className="text-lg font-semibold dark:text-white">{stockData.profile.pe !== undefined ? stockData.profile.pe.toFixed(2) : 'N/A'}</div>
                     </div>
                     
                     <div className="p-4 rounded-xl border border-gray-100 dark:border-gray-700 bg-white dark:bg-gray-800 shadow-sm">
@@ -135,7 +154,7 @@ export default function StockProfile({ symbol = "VNINDEX" }: StockProfileProps) 
                         <div className="text-xs uppercase text-gray-500 dark:text-gray-400 font-medium tracking-wider">EPS</div>
                         <BarChart3 className="h-4 w-4 text-indigo-500 dark:text-indigo-400" />
                       </div>
-                      <div className="text-lg font-semibold dark:text-white">{stockData.profile.eps.toFixed(2)}</div>
+                      <div className="text-lg font-semibold dark:text-white">{stockData.profile.eps !== undefined ? stockData.profile.eps.toFixed(2) : 'N/A'}</div>
                     </div>
                     
                     <div className="p-4 rounded-xl border border-gray-100 dark:border-gray-700 bg-white dark:bg-gray-800 shadow-sm">
@@ -143,7 +162,7 @@ export default function StockProfile({ symbol = "VNINDEX" }: StockProfileProps) 
                         <div className="text-xs uppercase text-gray-500 dark:text-gray-400 font-medium tracking-wider">ROE</div>
                         <BarChart4 className="h-4 w-4 text-cyan-500 dark:text-cyan-400" />
                       </div>
-                      <div className="text-lg font-semibold dark:text-white">{stockData.profile.roe.toFixed(2)}%</div>
+                      <div className="text-lg font-semibold dark:text-white">{stockData.profile.roe !== undefined ? stockData.profile.roe.toFixed(2) : 'N/A'}%</div>
                     </div>
                   </div>
                   
@@ -163,7 +182,7 @@ export default function StockProfile({ symbol = "VNINDEX" }: StockProfileProps) 
                       <TrendingUp className="h-4 w-4 text-gray-600 dark:text-gray-400" />
                     </div>
                     <span className="text-sm text-gray-600 dark:text-gray-400">
-                      ROA: <span className="font-medium dark:text-gray-300">{stockData.profile.roa.toFixed(2)}%</span>
+                      ROA: <span className="font-medium dark:text-gray-300">{stockData.profile.roa !== undefined ? stockData.profile.roa.toFixed(2) : 'N/A'}%</span>
                     </span>
                   </div>
                 </div>
