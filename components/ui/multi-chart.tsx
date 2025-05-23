@@ -70,7 +70,7 @@ export function MultiChartView({ symbol = 'VIC' }: MultiChartViewProps) {
   const volumeChartRef = useRef<HTMLDivElement>(null);
   const tooltipRef = useRef<HTMLDivElement>(null);
   const [isClient, setIsClient] = useState(false);
-  const [timeRange, setTimeRange] = useState<'1m' | '6m' | '1y' | '5y'>('1m');
+  const [timeRange, setTimeRange] = useState<'1m' | '6m' | '1y' | '5y'>('5y');
   const [stockData, setStockData] = useState<ChartData[]>([]);
   const [loading, setLoading] = useState(true);
 
