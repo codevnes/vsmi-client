@@ -25,7 +25,7 @@ const nextConfig: NextConfig = {
         headers: [
           {
             key: 'Content-Security-Policy',
-            value: "default-src 'self'; connect-src 'self' https://api.vsmi.vn https://*.vsmi.vn http://localhost:3001 https://www.google-analytics.com; script-src 'self' 'unsafe-inline' 'unsafe-eval' https://www.google-analytics.com https://www.googletagmanager.com; style-src 'self' 'unsafe-inline'; img-src 'self' data: https:; font-src 'self' data:;"
+            value: "default-src 'self'; connect-src 'self' https://api.vsmi.vn https://*.vsmi.vn http://localhost:3001 https://www.google-analytics.com; script-src 'self' 'unsafe-inline' 'unsafe-eval' https://www.google-analytics.com https://www.googletagmanager.com https://cdn.tiny.cloud; style-src 'self' 'unsafe-inline' https://cdn.tiny.cloud; img-src 'self' data: https: http://localhost:3001 https://cdn.tiny.cloud; font-src 'self' data: https://cdn.tiny.cloud;"
           }
         ]
       }

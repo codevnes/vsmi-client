@@ -226,6 +226,66 @@
   @apply text-sm text-center text-muted-foreground mt-2;
 }
 
+/* TinyMCE Content Styling */
+.prose .mce-content-body {
+  font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, 'Open Sans', 'Helvetica Neue', sans-serif;
+  font-size: 16px;
+  line-height: 1.6;
+}
+
+.prose .mce-item-table {
+  @apply border-collapse border border-border my-6 w-full;
+}
+
+.prose .mce-item-table th, 
+.prose .mce-item-table td {
+  @apply border border-border p-2;
+}
+
+.prose .mce-item-table th {
+  @apply bg-muted font-semibold;
+}
+
+.prose figure.image {
+  @apply my-8 mx-auto;
+}
+
+.prose figure.image img {
+  @apply rounded-lg mx-auto;
+}
+
+.prose figure.image figcaption {
+  @apply text-sm text-center text-muted-foreground mt-2;
+}
+
+.prose a {
+  @apply text-primary underline hover:text-primary/80 transition-colors;
+}
+
+.prose ul {
+  @apply list-disc pl-6 mb-6;
+}
+
+.prose ol {
+  @apply list-decimal pl-6 mb-6;
+}
+
+.prose li {
+  @apply mb-2;
+}
+
+.prose hr {
+  @apply my-8 border-t border-border;
+}
+
+.prose pre {
+  @apply bg-muted/30 p-4 rounded-lg my-6 overflow-x-auto text-sm;
+}
+
+.prose code {
+  @apply bg-muted/30 px-1.5 py-0.5 rounded text-sm;
+}
+
 /* Line clamp utilities */
 .line-clamp-1 {
   display: -webkit-box;

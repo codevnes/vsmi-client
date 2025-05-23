@@ -3,6 +3,7 @@ import { Inter, Roboto_Mono } from "next/font/google";
 import "./globals.css";
 import Header from "@/components/layout/Header";
 import Footer from "@/components/layout/Footer";
+import Script from "next/script";
 
 const inter = Inter({
   variable: "--font-inter",
@@ -28,6 +29,9 @@ export default function RootLayout({
 }>) {
   return (
     <html lang="vi" className="dark">
+      <head>
+        <link rel="stylesheet" href="https://cdn.tiny.cloud/1/no-api-key/tinymce/6/skins/content/default/content.min.css" />
+      </head>
       <body
         className={`${inter.variable} ${robotoMono.variable} antialiased min-h-screen bg-background text-foreground flex flex-col`}
       >

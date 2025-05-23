@@ -111,10 +111,10 @@ export default function PostDetailPage({ params }: { params: Promise<{ slug: str
             </span>
             {post.categories && post.categories.length > 0 && (
               <div className="flex flex-wrap gap-2">
-                {post.categories.map(category => (
+                {post.categories.map((category, index) => (
                   <Link 
-                    key={category.id} 
-                    href={`/tin-tuc/category/${category.id}`}
+                    key={category.id || `category-${index}`} 
+                    href={`/tin-tuc/category/${category.id || ''}`}
                     className="flex items-center bg-secondary/50 hover:bg-secondary text-xs px-2 py-1 rounded-full"
                   >
                     <Tag className="mr-1 h-3 w-3" />
@@ -159,7 +159,7 @@ export default function PostDetailPage({ params }: { params: Promise<{ slug: str
           
           {/* Content */}
           <div 
-            className="mt-8"
+            className="mt-8 prose-content mce-content-body"
             dangerouslySetInnerHTML={{ __html: post.content }} 
           />
           

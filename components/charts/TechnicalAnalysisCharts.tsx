@@ -45,6 +45,17 @@ export default function TechnicalAnalysisCharts(props: { symbol: string }) {
 
   // Custom function to map data correctly
   const mapDataManually = (data: any) => {
+    // Check if the data structure is valid
+    if (!data || !data.data || !data.data.records || !Array.isArray(data.data.records)) {
+      return {
+        eps: [],
+        performance: [],
+        revenue: [],
+        financial: [],
+        pe: []
+      };
+    }
+    
     const { records } = data.data;
     const isQuarterly = data.data.type === 'quarter';
     
@@ -72,6 +83,8 @@ export default function TechnicalAnalysisCharts(props: { symbol: string }) {
           debt: record.totalDebtToEquity,
           assets: record.totalAssetsToEquity,
         })).reverse(),
+        
+        pe: [] // Empty array for quarterly view
       };
       
       return quarterlyData;
@@ -102,6 +115,8 @@ export default function TechnicalAnalysisCharts(props: { symbol: string }) {
           debt: record.totalDebtToEquity,
           assets: record.totalAssetsToEquity,
         })).reverse(),
+        
+        revenue: [] // Empty array for yearly view
       };
       
       return yearlyData;
@@ -380,6 +395,12 @@ export default function TechnicalAnalysisCharts(props: { symbol: string }) {
       );
     }
 
+    // Ensure all required data arrays exist
+    const epsData = chartData.eps || [];
+    const performanceData = chartData.performance || [];
+    const revenueData = chartData.revenue || [];
+    const financialData = chartData.financial || [];
+
     return (
       <div className="grid grid-cols-1 md:grid-cols-2 gap-6 mt-6">
         {/* Chart 1: EPS Chart */}
@@ -403,7 +424,7 @@ export default function TechnicalAnalysisCharts(props: { symbol: string }) {
               },
               xaxis: {
                 ...commonOptions.xaxis,
-                categories: chartData.eps.map((item: any) => item.quarter),
+                categories: epsData.map((item: any) => item.quarter || ''),
                 title: {
                   text: 'Quý',
                   style: {
@@ -453,7 +474,7 @@ export default function TechnicalAnalysisCharts(props: { symbol: string }) {
             series={[
               {
                 name: 'EPS',
-                data: chartData.eps.map((item: any) => item.eps)
+                data: epsData.map((item: any) => item.eps || 0)
               }
             ]}
             type="bar"
@@ -482,7 +503,7 @@ export default function TechnicalAnalysisCharts(props: { symbol: string }) {
               },
               xaxis: {
                 ...commonOptions.xaxis,
-                categories: chartData.performance.map((item: any) => item.quarter),
+                categories: performanceData.map((item: any) => item.quarter || ''),
                 title: {
                   text: 'Quý',
                   style: {
@@ -520,11 +541,11 @@ export default function TechnicalAnalysisCharts(props: { symbol: string }) {
             series={[
               {
                 name: 'ROA',
-                data: chartData.performance.map((item: any) => item.roa)
+                data: performanceData.map((item: any) => item.roa || 0)
               },
               {
                 name: 'ROE',
-                data: chartData.performance.map((item: any) => item.roe)
+                data: performanceData.map((item: any) => item.roe || 0)
               }
             ]}
             type="bar"
@@ -532,27 +553,33 @@ export default function TechnicalAnalysisCharts(props: { symbol: string }) {
           />
         </div>
 
-        {/* Chart 3: Revenue and Margin Chart */}
+        {/* Chart 3: Revenue & Margin Chart */}
         <div>
-          <h3 className="text-lg font-medium mb-3 text-slate-200">Doanh thu và Biên lợi nhuận</h3>
+          <h3 className="text-lg font-medium mb-3 text-slate-200">Doanh thu và biên lợi nhuận</h3>
           <ReactApexChart 
             options={{
               ...commonOptions,
               chart: {
                 ...commonOptions.chart,
                 type: 'line',
-                stacked: false,
                 height: 350,
-                
+                dropShadow: {
+                  enabled: true,
+                  top: 2,
+                  left: 1,
+                  blur: 5,
+                  opacity: 0.2,
+                  color: '#e11d48'
+                }
               },
               stroke: {
                 width: [0, 3],
-                curve: 'smooth' as 'smooth',
-                lineCap: 'round' as 'round' | 'butt' | 'square'
+                curve: 'smooth',
+                colors: undefined
               },
               xaxis: {
                 ...commonOptions.xaxis,
-                categories: chartData.revenue.map((item: any) => item.quarter),
+                categories: revenueData.map((item: any) => item.quarter || ''),
                 title: {
                   text: 'Quý',
                   style: {
@@ -565,7 +592,7 @@ export default function TechnicalAnalysisCharts(props: { symbol: string }) {
                 {
                   ...commonOptions.yaxis,
                   title: {
-                    text: 'Doanh thu (tỷ VNĐ)',
+                    text: 'Doanh thu (tỷ VND)',
                     style: {
                       fontSize: '13px',
                       color: '#e2e8f0'
@@ -574,12 +601,14 @@ export default function TechnicalAnalysisCharts(props: { symbol: string }) {
                   labels: {
                     ...commonOptions.yaxis.labels,
                     formatter: function(val: number) {
-                      return (val / 1000000000).toFixed(1);
+                      if (val >= 1000) {
+                        return (val / 1000).toFixed(1) + 'K';
+                      }
+                      return val.toFixed(1);
                     }
                   }
                 },
                 {
-                  ...commonOptions.yaxis,
                   opposite: true,
                   title: {
                     text: 'Biên lợi nhuận (%)',
@@ -589,27 +618,34 @@ export default function TechnicalAnalysisCharts(props: { symbol: string }) {
                     }
                   },
                   labels: {
-                    ...commonOptions.yaxis.labels,
+                    style: {
+                      colors: '#e2e8f0',
+                      fontSize: '12px'
+                    },
                     formatter: function(val: number) {
                       return (val * 100).toFixed(1) + '%';
                     }
+                  },
+                  min: 0,
+                  max: function(max: number) {
+                    return Math.max(max * 1.2, 0.5);
                   }
                 }
               ],
-              colors: ['#2dd4bf', '#fb7185'],
+              colors: ['#f43f5e', '#a855f7'],
               markers: {
-                size: 4,
+                size: [0, 5],
                 strokeColors: '#1a2234',
                 strokeWidth: 2,
                 hover: {
-                  size: 6,
+                  size: 7
                 }
               },
               tooltip: {
                 ...commonOptions.tooltip,
                 y: {
                   formatter: function(val: number, opts?: any) {
-                    if (opts?.seriesIndex === 0) {
+                    if (opts.seriesIndex === 0) {
                       return (val / 1000000000).toFixed(2) + ' tỷ';
                     } else {
                       return (val * 100).toFixed(2) + '%';
@@ -622,12 +658,12 @@ export default function TechnicalAnalysisCharts(props: { symbol: string }) {
               {
                 name: 'Doanh thu',
                 type: 'column',
-                data: chartData.revenue.map((item: any) => item.revenue)
+                data: revenueData.map((item: any) => item.revenue || 0)
               },
               {
                 name: 'Biên lợi nhuận',
                 type: 'line',
-                data: chartData.revenue.map((item: any) => item.margin)
+                data: revenueData.map((item: any) => item.margin || 0)
               }
             ]}
             type="line"
@@ -635,7 +671,7 @@ export default function TechnicalAnalysisCharts(props: { symbol: string }) {
           />
         </div>
 
-        {/* Chart 4: Financial Ratios Chart */}
+        {/* Chart 4: Financial Ratios */}
         <div>
           <h3 className="text-lg font-medium mb-3 text-slate-200">Tỷ lệ tài chính</h3>
           <ReactApexChart 
@@ -651,12 +687,12 @@ export default function TechnicalAnalysisCharts(props: { symbol: string }) {
                   left: 1,
                   blur: 5,
                   opacity: 0.2,
-                  color: '#ec4899'
+                  color: '#7c3aed'
                 }
               },
               xaxis: {
                 ...commonOptions.xaxis,
-                categories: chartData.financial.map((item: any) => item.quarter),
+                categories: financialData.map((item: any) => item.quarter || ''),
                 title: {
                   text: 'Quý',
                   style: {
@@ -681,7 +717,7 @@ export default function TechnicalAnalysisCharts(props: { symbol: string }) {
                   }
                 }
               },
-              colors: ['#c084fc', '#f472b6'],
+              colors: ['#0ea5e9', '#8b5cf6'],
               tooltip: {
                 ...commonOptions.tooltip,
                 y: {
@@ -694,11 +730,11 @@ export default function TechnicalAnalysisCharts(props: { symbol: string }) {
             series={[
               {
                 name: 'Nợ / Vốn chủ sở hữu',
-                data: chartData.financial.map((item: any) => item.debt)
+                data: financialData.map((item: any) => item.debt || 0)
               },
               {
                 name: 'Tổng tài sản / Vốn chủ sở hữu',
-                data: chartData.financial.map((item: any) => item.assets)
+                data: financialData.map((item: any) => item.assets || 0)
               }
             ]}
             type="bar"
@@ -722,6 +758,12 @@ export default function TechnicalAnalysisCharts(props: { symbol: string }) {
       );
     }
 
+    // Ensure all required data arrays exist
+    const epsData = chartData.eps || [];
+    const peData = chartData.pe || [];
+    const performanceData = chartData.performance || [];
+    const financialData = chartData.financial || [];
+
     return (
       <div className="grid grid-cols-1 md:grid-cols-2 gap-6 mt-6">
         {/* Chart 1: EPS & Industry EPS Chart */}
@@ -737,7 +779,7 @@ export default function TechnicalAnalysisCharts(props: { symbol: string }) {
               },
               xaxis: {
                 ...commonOptions.xaxis,
-                categories: chartData.eps.map((item: any) => item.year),
+                categories: epsData.map((item: any) => item.year || ''),
                 title: {
                   text: 'Năm',
                   style: {
@@ -781,11 +823,11 @@ export default function TechnicalAnalysisCharts(props: { symbol: string }) {
             series={[
               {
                 name: 'EPS',
-                data: chartData.eps.map((item: any) => item.eps)
+                data: epsData.map((item: any) => item.eps || 0)
               },
               {
                 name: 'EPS Ngành',
-                data: chartData.eps.map((item: any) => item.epsIndustry)
+                data: epsData.map((item: any) => item.epsIndustry || 0)
               }
             ]}
             type="bar"
@@ -806,9 +848,7 @@ export default function TechnicalAnalysisCharts(props: { symbol: string }) {
               },
               xaxis: {
                 ...commonOptions.xaxis,
-                categories: chartData.pe && chartData.pe.length > 0 
-                  ? chartData.pe.map((item: any) => item.year)
-                  : [],
+                categories: peData.map((item: any) => item.year || ''),
                 title: {
                   text: 'Năm',
                   style: {
@@ -849,15 +889,11 @@ export default function TechnicalAnalysisCharts(props: { symbol: string }) {
             series={[
               {
                 name: 'P/E',
-                data: chartData.pe && chartData.pe.length > 0 
-                  ? chartData.pe.map((item: any) => item.pe)
-                  : []
+                data: peData.map((item: any) => item.pe || 0)
               },
               {
                 name: 'P/E Ngành',
-                data: chartData.pe && chartData.pe.length > 0 
-                  ? chartData.pe.map((item: any) => item.peIndustry)
-                  : []
+                data: peData.map((item: any) => item.peIndustry || 0)
               }
             ]}
             type="bar"
@@ -885,7 +921,7 @@ export default function TechnicalAnalysisCharts(props: { symbol: string }) {
               },
               xaxis: {
                 ...commonOptions.xaxis,
-                categories: chartData.performance.map((item: any) => item.year),
+                categories: performanceData.map((item: any) => item.year || ''),
                 title: {
                   text: 'Năm',
                   style: {
@@ -939,22 +975,22 @@ export default function TechnicalAnalysisCharts(props: { symbol: string }) {
               {
                 name: 'ROA',
                 type: 'column',
-                data: chartData.performance.map((item: any) => item.roa)
+                data: performanceData.map((item: any) => item.roa || 0)
               },
               {
                 name: 'ROE',
                 type: 'column',
-                data: chartData.performance.map((item: any) => item.roe)
+                data: performanceData.map((item: any) => item.roe || 0)
               },
               {
                 name: 'ROA Ngành',
                 type: 'line',
-                data: chartData.performance.map((item: any) => item.roaIndustry)
+                data: performanceData.map((item: any) => item.roaIndustry || 0)
               },
               {
                 name: 'ROE Ngành',
                 type: 'line',
-                data: chartData.performance.map((item: any) => item.roeIndustry)
+                data: performanceData.map((item: any) => item.roeIndustry || 0)
               }
             ]}
             type="line"
@@ -983,7 +1019,7 @@ export default function TechnicalAnalysisCharts(props: { symbol: string }) {
               },
               xaxis: {
                 ...commonOptions.xaxis,
-                categories: chartData.financial.map((item: any) => item.year),
+                categories: financialData.map((item: any) => item.year || ''),
                 title: {
                   text: 'Năm',
                   style: {
@@ -1021,11 +1057,11 @@ export default function TechnicalAnalysisCharts(props: { symbol: string }) {
             series={[
               {
                 name: 'Nợ / Vốn chủ sở hữu',
-                data: chartData.financial.map((item: any) => item.debt)
+                data: financialData.map((item: any) => item.debt || 0)
               },
               {
                 name: 'Tổng tài sản / Vốn chủ sở hữu',
-                data: chartData.financial.map((item: any) => item.assets)
+                data: financialData.map((item: any) => item.assets || 0)
               }
             ]}
             type="bar"
