@@ -6,6 +6,7 @@ import { Stock, PriceHistory } from "@/types/stock";
 import { fetchSelectedStocksWithPriceHistory } from "@/services/stockService";
 import Link from "next/link";
 import dynamic from "next/dynamic";
+import { useMediaQuery } from "@/hooks/useMediaQuery";
 
 // Dynamically import ApexCharts to avoid SSR issues
 const ReactApexChart = dynamic(() => import("react-apexcharts"), { ssr: false });
@@ -14,6 +15,7 @@ export function StockTable() {
   const [stocks, setStocks] = useState<Stock[]>([]);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState<string | null>(null);
+  const isMobile = useMediaQuery('(max-width: 640px)');
 
   useEffect(() => {
     const loadStocks = async () => {
@@ -159,7 +161,7 @@ export function StockTable() {
   };
 
   if (loading) {
-    return <div className="text-center p-4 text-white">Loading stocks data...</div>;
+    return <div className="text-center p-4 dark:text-white text-slate-900">Loading stocks data...</div>;
   }
 
   if (error) {
@@ -167,66 +169,72 @@ export function StockTable() {
   }
 
   if (!stocks || stocks.length === 0) {
-    return <div className="text-center p-4 text-white">No stock data available</div>;
+    return <div className="text-center p-4 dark:text-white text-slate-900">No stock data available</div>;
   }
 
   return (
     <Table>
-      <TableHeader className="font-semibold">
+      <TableHeader className="font-semibold bg-orange-200">
         <TableRow>
-          <TableHead className="text-gray-200">Mã CK</TableHead>
-          <TableHead className="text-gray-200 text-right">Giá</TableHead>
-          <TableHead className="text-gray-200 text-right">+/-</TableHead>
-          <TableHead className="text-gray-200 text-right">%</TableHead>
-          <TableHead className="text-gray-200 text-right">Tổng KL</TableHead>
-          <TableHead className="text-gray-200 text-right">Biểu đồ nến</TableHead>
+          <TableHead className="">Mã CK</TableHead>
+          {!isMobile && <TableHead className="text-right">Giá</TableHead>}
+          {!isMobile && <TableHead className="text-right">+/-</TableHead>}
+          <TableHead className="text-right">%</TableHead>
+          <TableHead className="text-right">Tổng KL</TableHead>
+          {!isMobile && <TableHead className="text-right">Biểu đồ</TableHead>}
         </TableRow>
       </TableHeader>
       <TableBody>
         {stocks.map((stock) => (
-          <TableRow key={stock.symbol} className="border-b border-slate-800 hover:bg-slate-800/50">
+          <TableRow key={stock.symbol} className="border-b dark:border-slate-800 border-slate-200 hover:bg-slate-100/50 dark:hover:bg-slate-800/50">
             <TableCell className="py-4">
               <Link href={`/stock/${stock.symbol}`} className="flex flex-col hover:opacity-80">
                 <div className="flex items-center">
                   <span className="h-2 w-2 rounded-full bg-red-500 mr-2"></span>
-                  <span className="font-bold text-white">{stock.symbol}</span>
+                  <span className="font-bold dark:text-white text-slate-900">{stock.symbol}</span>
                 </div>
-                <div className="text-xs text-gray-400 mt-1 line-clamp-1">{stock.stockName}</div>
+                <div className="text-xs mt-1 line-clamp-1">{stock.stockName}</div>
               </Link>
             </TableCell>
-            <TableCell className="text-right font-medium text-white">
-              {formatPrice(stock.latestSelectedStocks.close)}
-            </TableCell>
-            <TableCell className={`text-right font-medium ${(stock.latestSelectedStocks.return || 0) >= 0 ? 'text-emerald-500' : 'text-red-500'}`}>
-              {formatChange(stock.latestSelectedStocks.return)}
-            </TableCell>
+            {!isMobile && (
+              <TableCell className="text-right font-medium dark:text-white text-slate-900">
+                {formatPrice(stock.latestSelectedStocks.close)}
+              </TableCell>
+            )}
+            {!isMobile && (
+              <TableCell className={`text-right font-medium ${(stock.latestSelectedStocks.return || 0) >= 0 ? 'text-emerald-500' : 'text-red-500'}`}>
+                {formatChange(stock.latestSelectedStocks.return)}
+              </TableCell>
+            )}
             <TableCell className={`text-right font-medium ${(stock.latestSelectedStocks.return || 0) >= 0 ? 'text-emerald-500' : 'text-red-500'}`}>
               {formatPercent(stock.latestSelectedStocks.return)}
             </TableCell>
-            <TableCell className="text-right font-medium text-white">
+            <TableCell className="text-right font-medium dark:text-white text-slate-900">
               {formatVolume(stock.latestSelectedStocks.volume)}
             </TableCell>
-            <TableCell className="text-right">
-              <Link href={`/stock/${stock.symbol}`} className="block h-full w-fit m-auto mr-0 hover:opacity-80">
-                {typeof window !== 'undefined' && (
-                  <div style={{ width: '120px', height: '30px' }}>
-                    {stock.priceHistory && stock.priceHistory.length > 0 ? (
-                      <ReactApexChart
-                        options={getMiniCandlestickOptions((stock.latestSelectedStocks.return || 0) >= 0)}
-                        series={getMiniCandlestickData(stock.priceHistory)}
-                        type="candlestick"
-                        height={30}
-                        width={120}
-                      />
-                    ) : (
-                      <div className="w-full h-full flex items-center justify-center text-xs text-gray-500">
-                        No data
-                      </div>
-                    )}
-                  </div>
-                )}
-              </Link>
-            </TableCell>
+            {!isMobile && (
+              <TableCell className="text-right">
+                <Link href={`/stock/${stock.symbol}`} className="block h-full w-fit m-auto mr-0 hover:opacity-80">
+                  {typeof window !== 'undefined' && (
+                    <div style={{ width: '120px', height: '30px' }}>
+                      {stock.priceHistory && stock.priceHistory.length > 0 ? (
+                        <ReactApexChart
+                          options={getMiniCandlestickOptions((stock.latestSelectedStocks.return || 0) >= 0)}
+                          series={getMiniCandlestickData(stock.priceHistory)}
+                          type="candlestick"
+                          height={30}
+                          width={120}
+                        />
+                      ) : (
+                        <div className="w-full h-full flex items-center justify-center text-xs text-gray-500">
+                          No data
+                        </div>
+                      )}
+                    </div>
+                  )}
+                </Link>
+              </TableCell>
+            )}
           </TableRow>
         ))}
       </TableBody>

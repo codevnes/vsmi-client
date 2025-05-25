@@ -5,7 +5,14 @@ import Image from 'next/image';
 import { postsApi, handleApiError } from '@/app/services/api';
 import Link from 'next/link';
 import { Skeleton } from '@/components/ui/skeleton';
-import { useCallback } from 'react';
+
+// Import Swiper components and styles
+import { Swiper, SwiperSlide } from 'swiper/react';
+import { Navigation, Pagination, Autoplay } from 'swiper/modules';
+import 'swiper/css';
+import 'swiper/css/navigation';
+import 'swiper/css/pagination';
+import type { Swiper as SwiperType } from 'swiper';
 
 interface FormattedNews {
   id: string;
@@ -22,15 +29,7 @@ export function NewsSlider() {
   const [newsWithTime, setNewsWithTime] = useState<FormattedNews[]>([]);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState<string | null>(null);
-  const [currentSlide, setCurrentSlide] = useState(0);
-  const sliderRef = useRef<HTMLDivElement>(null);
-  
-  // Number of items to display per view
-  const itemsPerViewPC = 4;
-  const itemsPerViewMobile = 2;
-  
-  // Calculate total number of slides
-  const totalSlides = Math.ceil(newsWithTime.length / itemsPerViewPC);
+  const swiperRef = useRef<SwiperType | null>(null);
   
   useEffect(() => {
     const fetchLatestNews = async () => {
@@ -88,35 +87,6 @@ export function NewsSlider() {
     fetchLatestNews();
   }, []);
   
-  // Auto-slide every 5 seconds
-  useEffect(() => {
-    const interval = setInterval(() => {
-      if (newsWithTime.length > 0) {
-        setCurrentSlide((current) => 
-          current === totalSlides - 1 ? 0 : current + 1
-        );
-      }
-    }, 5000);
-    
-    return () => clearInterval(interval);
-  }, [newsWithTime.length, totalSlides]);
-  
-  const goToSlide = useCallback((index: number) => {
-    setCurrentSlide(index);
-  }, []);
-
-  const nextSlide = useCallback(() => {
-    setCurrentSlide((current) => 
-      current === totalSlides - 1 ? 0 : current + 1
-    );
-  }, [totalSlides]);
-
-  const prevSlide = useCallback(() => {
-    setCurrentSlide((current) => 
-      current === 0 ? totalSlides - 1 : current - 1
-    );
-  }, [totalSlides]);
-  
   if (error) {
     return (
       <div className="p-4 bg-red-50 text-red-700 rounded-md">
@@ -126,135 +96,108 @@ export function NewsSlider() {
   }
   
   return (
-    <div className="relative">
+    <div className="relative news-slider">
       <div className="flex justify-between items-center mb-5">
         <h2 className="text-xl font-semibold text-primary">Tin tức mới nhất</h2>
-        <Link href="/tin-tuc" className="text-sm text-primary hover:underline flex items-center group">
-          Xem tất cả
-          <svg className="w-4 h-4 ml-1 group-hover:translate-x-1 transition-transform" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
-            <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 5l7 7-7 7" />
-          </svg>
-        </Link>
-      </div>
-      
-      {/* Slider container */}
-      <div className="relative overflow-hidden" ref={sliderRef}>
-        <div 
-          className="transition-transform duration-500 ease-in-out"
-          style={{ 
-            transform: `translateX(-${currentSlide * 100}%)`,
-            display: 'flex',
-            width: `${totalSlides * 100}%`
-          }}
-        >
-          {loading ? (
-            // Show skeleton loaders while loading
-            <div className="w-full flex-shrink-0 grid grid-cols-2 md:grid-cols-4 gap-4">
-              {Array(8).fill(0).map((_, index) => (
-                <div key={index} className="border shadow-sm rounded-xl overflow-hidden">
-                  <Skeleton className="aspect-[16/9] w-full" />
-                  <div className="p-4">
-                    <Skeleton className="h-6 w-3/4 mb-2" />
-                    <Skeleton className="h-4 w-full mb-1" />
-                    <Skeleton className="h-4 w-5/6 mb-3" />
-                    <div className="flex items-center justify-between">
-                      <Skeleton className="h-3 w-24" />
-                      <Skeleton className="h-3 w-16" />
-                    </div>
-                  </div>
-                </div>
-              ))}
-            </div>
-          ) : (
-            // Render slides in groups
-            [...Array(totalSlides)].map((_, slideIndex) => {
-              const startIdx = slideIndex * itemsPerViewPC;
-              const slideItems = newsWithTime.slice(startIdx, startIdx + itemsPerViewPC);
-              
-              return (
-                <div key={slideIndex} className="w-full flex-shrink-0 p-2">
-                  <div className="grid grid-cols-2 md:grid-cols-4 gap-4">
-                    {slideItems.map((item, index) => (
-                      <div key={`${slideIndex}-${index}`} className="border shadow-sm rounded-xl overflow-hidden hover:shadow-md transition-shadow">
-                        <div className="relative aspect-[16/9] w-full">
-                          <Image 
-                            src={item.image} 
-                            alt={item.headline}
-                            fill
-                            className="object-cover"
-                            sizes="(max-width: 768px) 50vw, 25vw"
-                            onError={(e) => {
-                              // Fallback image if the provided one fails to load
-                              const target = e.target as HTMLImageElement;
-                              target.src = 'https://images.unsplash.com/photo-1579532537598-459ecdaf39cc?q=80&w=250&auto=format';
-                            }}
-                          />
-                        </div>
-                        <div className="p-4">
-                          <Link href={`/tin-tuc/${item.slug}`}>
-                            <h3 className="font-semibold text-sm md:text-base mb-2 line-clamp-2 hover:text-primary transition-colors">
-                              {item.headline}
-                            </h3>
-                          </Link>
-                          <p className="text-xs md:text-sm text-muted-foreground mb-3 line-clamp-2">{item.excerpt}</p>
-                          <div className="flex items-center justify-between text-xs text-muted-foreground">
-                            <span className="flex items-center">
-                              <svg className="w-3 h-3 mr-1 opacity-70" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
-                                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M8 7V3m8 4V3m-9 8h10M5 21h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v12a2 2 0 002 2z" />
-                              </svg>
-                              {item.date}
-                            </span>
-                            <span className="flex items-center">
-                              <svg className="w-3 h-3 mr-1 opacity-70" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
-                                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z" />
-                              </svg>
-                              {item.readTime}
-                            </span>
-                          </div>
-                        </div>
-                      </div>
-                    ))}
-                  </div>
-                </div>
-              );
-            })
-          )}
+        <div className="flex items-center gap-4">
+          
+          <Link href="/tin-tuc" className="text-sm text-primary hover:underline flex items-center group">
+            Xem tất cả
+            <svg className="w-4 h-4 ml-1 group-hover:translate-x-1 transition-transform" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+              <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 5l7 7-7 7" />
+            </svg>
+          </Link>
         </div>
       </div>
       
-      {/* Navigation arrows */}
-      <button 
-        className="absolute top-1/2 left-2 -translate-y-1/2 bg-background/80 hover:bg-background text-primary p-2 rounded-full shadow-md z-10"
-        onClick={prevSlide}
-        aria-label="Previous slide"
-      >
-        <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
-          <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M15 19l-7-7 7-7" />
-        </svg>
-      </button>
-      <button 
-        className="absolute top-1/2 right-2 -translate-y-1/2 bg-background/80 hover:bg-background text-primary p-2 rounded-full shadow-md z-10"
-        onClick={nextSlide}
-        aria-label="Next slide"
-      >
-        <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
-          <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 5l7 7-7 7" />
-        </svg>
-      </button>
+      {loading ? (
+        // Show skeleton loaders while loading
+        <div className="grid grid-cols-2 md:grid-cols-4 gap-4">
+          {Array(4).fill(0).map((_, index) => (
+            <div key={index} className="border shadow-sm rounded-xl overflow-hidden">
+              <Skeleton className="aspect-[16/9] w-full" />
+              <div className="p-4">
+                <Skeleton className="h-6 w-3/4 mb-2" />
+                <Skeleton className="h-4 w-full mb-1" />
+                <Skeleton className="h-4 w-5/6 mb-3" />
+                <div className="flex items-center justify-between">
+                  <Skeleton className="h-3 w-24" />
+                  <Skeleton className="h-3 w-16" />
+                </div>
+              </div>
+            </div>
+          ))}
+        </div>
+      ) : (
+        // Swiper carousel
+        <Swiper
+          modules={[Navigation, Pagination, Autoplay]}
+          spaceBetween={16}
+          slidesPerView={2.5}
+          breakpoints={{
+            640: { slidesPerView: 2, spaceBetween: 16 },
+            1024: { slidesPerView: 4, spaceBetween: 16 },
+          }}
+          pagination={{ 
+            clickable: true,
+            el: '.news-slider-pagination',
+            bulletClass: 'inline-block w-2 h-2 bg-gray-300 rounded-full transition-all mx-1 cursor-pointer hover:bg-gray-400',
+            bulletActiveClass: '!w-6 !bg-primary',
+          }}
+          autoplay={{ delay: 5000, disableOnInteraction: false }}
+          className="rounded-xl"
+          onSwiper={(swiper) => {
+            swiperRef.current = swiper;
+          }}
+          navigation={false} // Disable default navigation to use custom buttons
+        >
+          {newsWithTime.map((item) => (
+            <SwiperSlide key={item.id}>
+              <div className="rounded-xl bg-white overflow-hidden hover:shadow-md transition-shadow h-full">
+                <div className="relative aspect-[16/9] w-full">
+                  <Image 
+                    src={item.image} 
+                    alt={item.headline}
+                    fill
+                    className="object-cover"
+                    sizes="(max-width: 768px) 50vw, 25vw"
+                    onError={(e) => {
+                      // Fallback image if the provided one fails to load
+                      const target = e.target as HTMLImageElement;
+                      target.src = 'https://images.unsplash.com/photo-1579532537598-459ecdaf39cc?q=80&w=250&auto=format';
+                    }}
+                  />
+                  {/* Category badge if available */}
+                  {item.category && (
+                    <span className="absolute top-2 left-2 bg-primary/80 text-white text-xs px-2 py-1 rounded">
+                      {item.category}
+                    </span>
+                  )}
+                </div>
+                <div className="p-4">
+                  <Link href={`/tin-tuc/${item.slug}`}>
+                    <h3 className="font-semibold text-xs md:text-base mb-2 line-clamp-2 hover:text-primary transition-colors">
+                      {item.headline}
+                    </h3>
+                  </Link>
+                  <div className="flex items-center justify-between text-xs text-muted-foreground">
+                    <span className="flex items-center">
+                      <svg className="w-3 h-3 mr-1 opacity-70" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+                        <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z" />
+                      </svg>
+                      {item.readTime}
+                    </span>
+                  </div>
+                </div>
+              </div>
+            </SwiperSlide>
+          ))}
+        </Swiper>
+      )}
       
-      {/* Dots navigation */}
-      <div className="flex justify-center mt-4 gap-2">
-        {!loading && totalSlides > 0 && [...Array(totalSlides)].map((_, index) => (
-          <button
-            key={index}
-            className={`w-2 h-2 rounded-full transition-all ${
-              index === currentSlide ? 'bg-primary w-6' : 'bg-gray-300 hover:bg-gray-400'
-            }`}
-            onClick={() => goToSlide(index)}
-            aria-label={`Go to slide ${index + 1}`}
-          />
-        ))}
-      </div>
+      {/* Custom pagination container */}
+      <div className="news-slider-pagination flex justify-center mt-4"></div>
+      
     </div>
   );
-} 
+}

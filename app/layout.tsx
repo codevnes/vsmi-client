@@ -4,6 +4,7 @@ import "./globals.css";
 import Header from "@/components/layout/Header";
 import Footer from "@/components/layout/Footer";
 import Script from "next/script";
+import { ThemeProvider } from "next-themes";
 
 const inter = Inter({
   variable: "--font-inter",
@@ -28,18 +29,22 @@ export default function RootLayout({
   children: React.ReactNode;
 }>) {
   return (
-    <html lang="vi" className="dark">
-      <head>
-        <link rel="stylesheet" href="https://cdn.tiny.cloud/1/no-api-key/tinymce/6/skins/content/default/content.min.css" />
-      </head>
+    <html lang="vi" suppressHydrationWarning>
       <body
-        className={`${inter.variable} ${robotoMono.variable} antialiased min-h-screen bg-background text-foreground flex flex-col`}
+        className={`${inter.variable} ${robotoMono.variable} antialiased min-h-screen text-foreground flex flex-col`}
       >
-        <div className="flex flex-col flex-1">
-          <Header />
-          <main className="flex-1 container py-6">{children}</main>
-          <Footer />
-        </div>
+        <ThemeProvider
+          attribute="class"
+          defaultTheme="system"
+          enableSystem
+          disableTransitionOnChange
+        >
+          <div className="flex flex-col flex-1 bg-orange-100/50">
+            <Header />
+            <main className="flex-1 container py-6">{children}</main>
+            <Footer />
+          </div>
+        </ThemeProvider>
       </body>
     </html>
   );
