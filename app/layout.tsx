@@ -28,7 +28,7 @@ export default function RootLayout({
   children: React.ReactNode;
 }>) {
   return (
-    <html lang="vi" suppressHydrationWarning>
+    <html className="light" lang="vi" suppressHydrationWarning>
       <body
         className={`${inter.variable} ${robotoMono.variable} antialiased min-h-screen text-foreground flex flex-col`}
       >
