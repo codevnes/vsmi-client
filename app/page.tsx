@@ -10,6 +10,7 @@ export default function Home() {
   return (
     <div className="space-y-8">
       {/* Section 1: Danh sách bài viết dạng slider */}
+      Trang chur
       <section className="py-6">
         <div className="flex justify-between items-center mb-5">
           <h2 className="text-xl font-semibold text-primary">Tin tức mới nhất</h2>
