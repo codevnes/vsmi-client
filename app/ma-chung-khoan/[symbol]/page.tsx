@@ -31,7 +31,7 @@ type FinancialRecommendation = {
 // Function to fetch financial recommendation data
 async function getFinancialRecommendation(symbol: string): Promise<FinancialRecommendation | null> {
   try {
-    const response = await fetch(`http://localhost:4000/api/stocks/${symbol}`);
+    const response = await fetch(`http://103.162.21.193:4000/api/stocks/${symbol}`);
     const result = await response.json();
 
     if (result.success && result.data) {
