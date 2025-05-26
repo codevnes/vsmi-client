@@ -28,13 +28,13 @@ export default function RootLayout({
   children: React.ReactNode;
 }>) {
   return (
-    <html className="light" lang="vi" suppressHydrationWarning>
+    <html lang="vi" suppressHydrationWarning>
       <body
         className={`${inter.variable} ${robotoMono.variable} antialiased min-h-screen text-foreground flex flex-col`}
       >
         <ThemeProvider
           attribute="class"
-          defaultTheme="system"
+          defaultTheme="light"
           enableSystem
           disableTransitionOnChange
         >

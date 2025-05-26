@@ -361,7 +361,7 @@ export default function StockDetailPage(props: Props) {
                     <div className="p-6">
                       {/* F-Score Model */}
                       <div className="mb-8">
-                        <h3 className="text-lg font-semibold mb-4 text-gray-800 dark:text-gray-200 flex items-center">
+                        <h3 className="text-lg font-semibold mb-4 text-gray-800 flex items-center">
                           <svg xmlns="http://www.w3.org/2000/svg" className="h-5 w-5 mr-2 text-blue-500" fill="none" viewBox="0 0 24 24" stroke="currentColor">
                             <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M11 3.055A9.001 9.001 0 1020.945 13H11V3.055z" />
                             <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M20.488 9H15V3.512A9.025 9.025 0 0120.488 9z" />
@@ -382,27 +382,27 @@ export default function StockDetailPage(props: Props) {
                               <table className="w-full border-collapse">
                                 <thead>
                                   <tr>
-                                    <th colSpan={2} className="bg-blue-600 dark:bg-blue-700 text-white py-2 px-3 text-center rounded-t-lg">
+                                    <th colSpan={2} className="bg-blue-600 text-white py-2 px-3 text-center rounded-t-lg">
                                       Mô hình chấm điểm F-Score
                                     </th>
                                   </tr>
                                 </thead>
-                                <tbody className="divide-y divide-gray-200 dark:divide-gray-700">
-                                  <tr className="bg-white dark:bg-gray-800">
-                                    <td className="py-3 px-4 text-gray-700 dark:text-gray-300">Sinh lợi</td>
-                                    <td className="py-3 px-4 text-right font-medium text-gray-900 dark:text-white">{2}</td>
+                                <tbody className="divide-y divide-gray-200">
+                                  <tr className="bg-white">
+                                    <td className="py-3 px-4 text-gray-700">Sinh lợi</td>
+                                    <td className="py-3 px-4 text-right font-medium text-gray-900">{2}</td>
                                   </tr>
-                                  <tr className="bg-white dark:bg-gray-800">
-                                    <td className="py-3 px-4 text-gray-700 dark:text-gray-300">Đòn bẩy</td>
-                                    <td className="py-3 px-4 text-right font-medium text-gray-900 dark:text-white">{1}</td>
+                                  <tr className="bg-white">
+                                    <td className="py-3 px-4 text-gray-700">Đòn bẩy</td>
+                                    <td className="py-3 px-4 text-right font-medium text-gray-900">{1}</td>
                                   </tr>
-                                  <tr className="bg-white dark:bg-gray-800">
-                                    <td className="py-3 px-4 text-gray-700 dark:text-gray-300">Hiệu quả</td>
-                                    <td className="py-3 px-4 text-right font-medium text-gray-900 dark:text-white">{2}</td>
+                                  <tr className="bg-white">
+                                    <td className="py-3 px-4 text-gray-700">Hiệu quả</td>
+                                    <td className="py-3 px-4 text-right font-medium text-gray-900">{2}</td>
                                   </tr>
-                                  <tr className="bg-white dark:bg-gray-800">
-                                    <td className="py-3 px-4 text-gray-700 dark:text-gray-300 font-medium">Tổng điểm</td>
-                                    <td className="py-3 px-4 text-right font-bold bg-blue-50 dark:bg-blue-900 text-blue-700 dark:text-blue-300 rounded-br-lg">{5}/{9}</td>
+                                  <tr className="bg-white">
+                                    <td className="py-3 px-4 text-gray-700 font-medium">Tổng điểm</td>
+                                    <td className="py-3 px-4 text-right font-bold bg-blue-50 text-blue-700 rounded-br-lg">{5}/{9}</td>
                                   </tr>
                                 </tbody>
                               </table>
@@ -412,23 +412,23 @@ export default function StockDetailPage(props: Props) {
                               <table className="w-full border-collapse">
                                 <thead>
                                   <tr>
-                                    <th colSpan={2} className="bg-blue-600 dark:bg-blue-700 text-white py-2 px-3 text-center rounded-t-lg">
+                                    <th colSpan={2} className="bg-blue-600 text-white py-2 px-3 text-center rounded-t-lg">
                                       Định giá
                                     </th>
                                   </tr>
                                 </thead>
-                                <tbody className="divide-y divide-gray-200 dark:divide-gray-700">
-                                  <tr className="bg-white dark:bg-gray-800">
-                                    <td className="py-3 px-4 text-gray-700 dark:text-gray-300">P/E</td>
-                                    <td className="py-3 px-4 text-right font-medium text-gray-900 dark:text-white"></td>
+                                <tbody className="divide-y divide-gray-200">
+                                  <tr className="bg-white">
+                                    <td className="py-3 px-4 text-gray-700">P/E</td>
+                                    <td className="py-3 px-4 text-right font-medium text-gray-900"></td>
                                   </tr>
-                                  <tr className="bg-white dark:bg-gray-800">
-                                    <td className="py-3 px-4 text-gray-700 dark:text-gray-300">P/E ngành</td>
-                                    <td className="py-3 px-4 text-right font-medium text-gray-900 dark:text-white"></td>
+                                  <tr className="bg-white">
+                                    <td className="py-3 px-4 text-gray-700">P/E ngành</td>
+                                    <td className="py-3 px-4 text-right font-medium text-gray-900"></td>
                                   </tr>
-                                  <tr className="bg-white dark:bg-gray-800">
-                                    <td className="py-3 px-4 text-gray-700 dark:text-gray-300 rounded-bl-lg">P/E dự phóng</td>
-                                    <td className="py-3 px-4 text-right font-medium text-gray-900 dark:text-white rounded-br-lg"></td>
+                                  <tr className="bg-white">
+                                    <td className="py-3 px-4 text-gray-700 rounded-bl-lg">P/E dự phóng</td>
+                                    <td className="py-3 px-4 text-right font-medium text-gray-900 rounded-br-lg"></td>
                                   </tr>
                                 </tbody>
                               </table>
@@ -439,15 +439,15 @@ export default function StockDetailPage(props: Props) {
 
                       {/* Interpretation summary */}
                       <div className="bg-white dark:bg-gray-800 p-5 rounded-lg shadow-sm mt-6">
-                        <h3 className="text-lg font-semibold mb-3 text-gray-800 dark:text-gray-200 flex items-center">
+                        <h3 className="text-lg font-semibold mb-3 flex items-center">
                           <svg xmlns="http://www.w3.org/2000/svg" className="h-5 w-5 mr-2 text-blue-500" fill="none" viewBox="0 0 24 24" stroke="currentColor">
                             <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M13 16h-1v-4h-1m1-4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z" />
                           </svg>
                           Kết luận
                         </h3>
                         <div className="prose dark:prose-invert max-w-none">
-                          <p className="text-gray-700 dark:text-gray-300">
-                            Doanh nghiệp có chỉ số F-Score đạt <span className="font-medium text-amber-600 dark:text-amber-400">5/9 điểm (trung bình)</span>.
+                          <p className="text-gray-700">
+                            Doanh nghiệp có chỉ số F-Score đạt <span className="font-medium text-amber-600">5/9 điểm (trung bình)</span>.
                             Điểm mạnh ở khả năng sinh lời và không phát hành thêm cổ phiếu.
                             Tuy nhiên, dòng tiền từ hoạt động kinh doanh âm là dấu hiệu cần lưu ý.
                           </p>
@@ -462,9 +462,9 @@ export default function StockDetailPage(props: Props) {
 
           {/* Section: Phân tích kỹ thuật */}
           <section>
-            <Card className="dark:bg-gray-800 dark:border-gray-700 overflow-hidden border-0 shadow-lg mb-6">
+            <Card className="bg-white border-0 shadow-lg mb-6">
               <CardContent className="p-0">
-                <div className="bg-blue-600 dark:bg-blue-800 p-6">
+                <div className="bg-blue-600 p-6">
                   <h2 id="technical-analysis-heading" className="text-2xl font-bold text-white flex items-center">
                     <svg xmlns="http://www.w3.org/2000/svg" className="h-6 w-6 mr-2" fill="none" viewBox="0 0 24 24" stroke="currentColor">
                       <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M7 12l3-3 3 3 4-4M8 21l4-4 4 4M3 4h18M4 4h16v12a1 1 0 01-1 1H5a1 1 0 01-1-1V4z" />
@@ -477,49 +477,49 @@ export default function StockDetailPage(props: Props) {
                 <div className="p-6 space-y-6">
                   {/* Table A: Nhóm chỉ báo dao động */}
                   <div>
-                    <h3 className="text-lg font-semibold mb-4 text-gray-800 dark:text-gray-200 flex items-center">
-                      <span className="flex items-center justify-center bg-blue-100 dark:bg-blue-900 text-blue-800 dark:text-blue-200 w-7 h-7 rounded-full mr-2 text-sm font-bold">A</span>
+                    <h3 className="text-lg font-semibold mb-4 text-gray-800 flex items-center">
+                      <span className="flex items-center justify-center bg-blue-100 text-blue-800 w-7 h-7 rounded-full mr-2 text-sm font-bold">A</span>
                       NHÓM CHỈ BÁO DAO ĐỘNG
                     </h3>
                     <div className="overflow-x-auto">
                       <table className="w-full border-collapse">
                         <thead>
                           <tr>
-                            <th className="bg-blue-50 dark:bg-blue-900 text-blue-800 dark:text-blue-100 py-2 px-4 text-left">Chỉ báo</th>
-                            <th className="bg-blue-50 dark:bg-blue-900 text-blue-800 dark:text-blue-100 py-2 px-4 text-right">Giá trị</th>
-                            <th className="bg-blue-50 dark:bg-blue-900 text-blue-800 dark:text-blue-100 py-2 px-4 text-center">Tín hiệu</th>
+                            <th className="bg-blue-50 text-blue-800 py-2 px-4 text-left">Chỉ báo</th>
+                            <th className="bg-blue-50 text-blue-800 py-2 px-4 text-right">Giá trị</th>
+                            <th className="bg-blue-50 text-blue-800 py-2 px-4 text-center">Tín hiệu</th>
                           </tr>
                         </thead>
-                        <tbody className="divide-y divide-gray-200 dark:divide-gray-700">
-                          <tr className="bg-white dark:bg-gray-800">
-                            <td className="py-2 px-4 text-gray-700 dark:text-gray-300">Relative Strength Index (14)</td>
-                            <td className="py-2 px-4 text-right font-medium text-gray-900 dark:text-white">62</td>
-                            <td className="py-2 px-4 text-center font-medium text-yellow-600 dark:text-yellow-400">Trung Lập</td>
+                        <tbody className="divide-y divide-gray-200">
+                          <tr className="bg-white">
+                            <td className="py-2 px-4 text-gray-700">Relative Strength Index (14)</td>
+                            <td className="py-2 px-4 text-right font-medium text-gray-900">62</td>
+                            <td className="py-2 px-4 text-center font-medium text-yellow-600">Trung Lập</td>
                           </tr>
-                          <tr className="bg-white dark:bg-gray-800">
-                            <td className="py-2 px-4 text-gray-700 dark:text-gray-300">Stochastic %K</td>
-                            <td className="py-2 px-4 text-right font-medium text-gray-900 dark:text-white">93</td>
-                            <td className="py-2 px-4 text-center font-medium text-red-600 dark:text-red-400">BÁN</td>
+                          <tr className="bg-white">
+                            <td className="py-2 px-4 text-gray-700">Stochastic %K</td>
+                            <td className="py-2 px-4 text-right font-medium text-gray-900">93</td>
+                            <td className="py-2 px-4 text-center font-medium text-red-600">BÁN</td>
                           </tr>
-                          <tr className="bg-white dark:bg-gray-800">
-                            <td className="py-2 px-4 text-gray-700 dark:text-gray-300">Williams_%R</td>
-                            <td className="py-2 px-4 text-right font-medium text-gray-900 dark:text-white">-4</td>
-                            <td className="py-2 px-4 text-center font-medium text-red-600 dark:text-red-400">BÁN</td>
+                          <tr className="bg-white">
+                            <td className="py-2 px-4 text-gray-700">Williams_%R</td>
+                            <td className="py-2 px-4 text-right font-medium text-gray-900">-4</td>
+                            <td className="py-2 px-4 text-center font-medium text-red-600">BÁN</td>
                           </tr>
-                          <tr className="bg-white dark:bg-gray-800">
-                            <td className="py-2 px-4 text-gray-700 dark:text-gray-300">Ultimate_Oscillator</td>
-                            <td className="py-2 px-4 text-right font-medium text-gray-900 dark:text-white">60</td>
-                            <td className="py-2 px-4 text-center font-medium text-yellow-600 dark:text-yellow-400">Trung Lập</td>
+                          <tr className="bg-white">
+                            <td className="py-2 px-4 text-gray-700">Ultimate_Oscillator</td>
+                            <td className="py-2 px-4 text-right font-medium text-gray-900">60</td>
+                            <td className="py-2 px-4 text-center font-medium text-yellow-600">Trung Lập</td>
                           </tr>
-                          <tr className="bg-white dark:bg-gray-800">
-                            <td className="py-2 px-4 text-gray-700 dark:text-gray-300">Commodity Channel Index (20)</td>
-                            <td className="py-2 px-4 text-right font-medium text-gray-900 dark:text-white">165</td>
-                            <td className="py-2 px-4 text-center font-medium text-red-600 dark:text-red-400">BÁN</td>
+                          <tr className="bg-white">
+                            <td className="py-2 px-4 text-gray-700">Commodity Channel Index (20)</td>
+                            <td className="py-2 px-4 text-right font-medium text-gray-900">165</td>
+                            <td className="py-2 px-4 text-center font-medium text-red-600">BÁN</td>
                           </tr>
-                          <tr className="bg-white dark:bg-gray-800">
-                            <td className="py-2 px-4 text-gray-700 dark:text-gray-300">Stochastic RSI Fast</td>
-                            <td className="py-2 px-4 text-right font-medium text-gray-900 dark:text-white">99</td>
-                            <td className="py-2 px-4 text-center font-medium text-red-600 dark:text-red-400">BÁN</td>
+                          <tr className="bg-white">
+                            <td className="py-2 px-4 text-gray-700">Stochastic RSI Fast</td>
+                            <td className="py-2 px-4 text-right font-medium text-gray-900">99</td>
+                            <td className="py-2 px-4 text-center font-medium text-red-600">BÁN</td>
                           </tr>
                         </tbody>
                       </table>
@@ -528,74 +528,74 @@ export default function StockDetailPage(props: Props) {
 
                   {/* Table B: Nhóm chỉ báo xu hướng */}
                   <div>
-                    <h3 className="text-lg font-semibold mb-4 text-gray-800 dark:text-gray-200 flex items-center">
-                      <span className="flex items-center justify-center bg-blue-100 dark:bg-blue-900 text-blue-800 dark:text-blue-200 w-7 h-7 rounded-full mr-2 text-sm font-bold">B</span>
+                    <h3 className="text-lg font-semibold mb-4 text-gray-800 flex items-center">
+                      <span className="flex items-center justify-center bg-blue-100 text-blue-800 w-7 h-7 rounded-full mr-2 text-sm font-bold">B</span>
                       NHÓM CHỈ BÁO XU HƯỚNG
                     </h3>
                     <div className="overflow-x-auto">
                       <table className="w-full border-collapse">
                         <thead>
                           <tr>
-                            <th className="bg-blue-50 dark:bg-blue-900 text-blue-800 dark:text-blue-100 py-2 px-4 text-left">Chỉ báo</th>
-                            <th className="bg-blue-50 dark:bg-blue-900 text-blue-800 dark:text-blue-100 py-2 px-4 text-right">Giá trị</th>
-                            <th className="bg-blue-50 dark:bg-blue-900 text-blue-800 dark:text-blue-100 py-2 px-4 text-center">Xu hướng</th>
+                            <th className="bg-blue-50 text-blue-800 py-2 px-4 text-left">Chỉ báo</th>
+                            <th className="bg-blue-50 text-blue-800 py-2 px-4 text-right">Giá trị</th>
+                            <th className="bg-blue-50 text-blue-800 py-2 px-4 text-center">Xu hướng</th>
                           </tr>
                         </thead>
-                        <tbody className="divide-y divide-gray-200 dark:divide-gray-700">
-                          <tr className="bg-white dark:bg-gray-800">
-                            <td className="py-2 px-4 text-gray-700 dark:text-gray-300">MACD Level (12, 26)</td>
-                            <td className="py-2 px-4 text-right font-medium text-gray-900 dark:text-white">-5</td>
-                            <td className="py-2 px-4 text-center font-medium text-red-600 dark:text-red-400">GIẢM</td>
+                        <tbody className="divide-y divide-gray-200">
+                          <tr className="bg-white">
+                            <td className="py-2 px-4 text-gray-700">MACD Level (12, 26)</td>
+                            <td className="py-2 px-4 text-right font-medium text-gray-900">-5</td>
+                            <td className="py-2 px-4 text-center font-medium text-red-600">GIẢM</td>
                           </tr>
-                          <tr className="bg-white dark:bg-gray-800">
-                            <td className="py-2 px-4 text-gray-700 dark:text-gray-300">Average Directional Index (14)</td>
-                            <td className="py-2 px-4 text-right font-medium text-gray-900 dark:text-white">28</td>
-                            <td className="py-2 px-4 text-center font-medium text-yellow-600 dark:text-yellow-400">Có xu hướng</td>
+                          <tr className="bg-white">
+                            <td className="py-2 px-4 text-gray-700">Average Directional Index (14)</td>
+                            <td className="py-2 px-4 text-right font-medium text-gray-900">28</td>
+                            <td className="py-2 px-4 text-center font-medium text-yellow-600">Có xu hướng</td>
                           </tr>
-                          <tr className="bg-white dark:bg-gray-800">
-                            <td className="py-2 px-4 text-gray-700 dark:text-gray-300">Momentum (10)</td>
-                            <td className="py-2 px-4 text-right font-medium text-gray-900 dark:text-white">2.300</td>
-                            <td className="py-2 px-4 text-center font-medium text-green-600 dark:text-green-400">TĂNG</td>
+                          <tr className="bg-white">
+                            <td className="py-2 px-4 text-gray-700">Momentum (10)</td>
+                            <td className="py-2 px-4 text-right font-medium text-gray-900">2.300</td>
+                            <td className="py-2 px-4 text-center font-medium text-green-600">TĂNG</td>
                           </tr>
-                          <tr className="bg-white dark:bg-gray-800">
-                            <td className="py-2 px-4 text-gray-700 dark:text-gray-300">MA (10)</td>
-                            <td className="py-2 px-4 text-right font-medium text-gray-900 dark:text-white">14.850</td>
-                            <td className="py-2 px-4 text-center font-medium text-green-600 dark:text-green-400">TĂNG</td>
+                          <tr className="bg-white">
+                            <td className="py-2 px-4 text-gray-700">MA (10)</td>
+                            <td className="py-2 px-4 text-right font-medium text-gray-900">14.850</td>
+                            <td className="py-2 px-4 text-center font-medium text-green-600">TĂNG</td>
                           </tr>
-                          <tr className="bg-white dark:bg-gray-800">
-                            <td className="py-2 px-4 text-gray-700 dark:text-gray-300">MA (20)</td>
-                            <td className="py-2 px-4 text-right font-medium text-gray-900 dark:text-white">14.145</td>
-                            <td className="py-2 px-4 text-center font-medium text-green-600 dark:text-green-400">TĂNG</td>
+                          <tr className="bg-white">
+                            <td className="py-2 px-4 text-gray-700">MA (20)</td>
+                            <td className="py-2 px-4 text-right font-medium text-gray-900">14.145</td>
+                            <td className="py-2 px-4 text-center font-medium text-green-600">TĂNG</td>
                           </tr>
-                          <tr className="bg-white dark:bg-gray-800">
-                            <td className="py-2 px-4 text-gray-700 dark:text-gray-300">MA (30)</td>
-                            <td className="py-2 px-4 text-right font-medium text-gray-900 dark:text-white">14.535</td>
-                            <td className="py-2 px-4 text-center font-medium text-green-600 dark:text-green-400">TĂNG</td>
+                          <tr className="bg-white">
+                            <td className="py-2 px-4 text-gray-700">MA (30)</td>
+                            <td className="py-2 px-4 text-right font-medium text-gray-900">14.535</td>
+                            <td className="py-2 px-4 text-center font-medium text-green-600">TĂNG</td>
                           </tr>
-                          <tr className="bg-white dark:bg-gray-800">
-                            <td className="py-2 px-4 text-gray-700 dark:text-gray-300">MA (50)</td>
-                            <td className="py-2 px-4 text-right font-medium text-gray-900 dark:text-white">15.854</td>
-                            <td className="py-2 px-4 text-center font-medium text-green-600 dark:text-green-400">TĂNG</td>
+                          <tr className="bg-white">
+                            <td className="py-2 px-4 text-gray-700">MA (50)</td>
+                            <td className="py-2 px-4 text-right font-medium text-gray-900">15.854</td>
+                            <td className="py-2 px-4 text-center font-medium text-green-600">TĂNG</td>
                           </tr>
-                          <tr className="bg-white dark:bg-gray-800">
-                            <td className="py-2 px-4 text-gray-700 dark:text-gray-300">MA (100)</td>
-                            <td className="py-2 px-4 text-right font-medium text-gray-900 dark:text-white">16.607</td>
-                            <td className="py-2 px-4 text-center font-medium text-red-600 dark:text-red-400">GIẢM</td>
+                          <tr className="bg-white">
+                            <td className="py-2 px-4 text-gray-700">MA (100)</td>
+                            <td className="py-2 px-4 text-right font-medium text-gray-900">16.607</td>
+                            <td className="py-2 px-4 text-center font-medium text-red-600">GIẢM</td>
                           </tr>
-                          <tr className="bg-white dark:bg-gray-800">
-                            <td className="py-2 px-4 text-gray-700 dark:text-gray-300">MA (200)</td>
-                            <td className="py-2 px-4 text-right font-medium text-gray-900 dark:text-white">18.173</td>
-                            <td className="py-2 px-4 text-center font-medium text-red-600 dark:text-red-400">GIẢM</td>
+                          <tr className="bg-white">
+                            <td className="py-2 px-4 text-gray-700">MA (200)</td>
+                            <td className="py-2 px-4 text-right font-medium text-gray-900">18.173</td>
+                            <td className="py-2 px-4 text-center font-medium text-red-600">GIẢM</td>
                           </tr>
-                          <tr className="bg-white dark:bg-gray-800">
-                            <td className="py-2 px-4 text-gray-700 dark:text-gray-300">Hull Moving Average (9)</td>
-                            <td className="py-2 px-4 text-right font-medium text-gray-900 dark:text-white">15.615</td>
-                            <td className="py-2 px-4 text-center font-medium text-green-600 dark:text-green-400">TĂNG</td>
+                          <tr className="bg-white">
+                            <td className="py-2 px-4 text-gray-700">Hull Moving Average (9)</td>
+                            <td className="py-2 px-4 text-right font-medium text-gray-900">15.615</td>
+                            <td className="py-2 px-4 text-center font-medium text-green-600">TĂNG</td>
                           </tr>
-                          <tr className="bg-white dark:bg-gray-800">
-                            <td className="py-2 px-4 text-gray-700 dark:text-gray-300">Ichimoku Base Line (9, 26, 52, 26)</td>
-                            <td className="py-2 px-4 text-right font-medium text-gray-900 dark:text-white">14.250</td>
-                            <td className="py-2 px-4 text-center font-medium text-green-600 dark:text-green-400">TĂNG</td>
+                          <tr className="bg-white">
+                            <td className="py-2 px-4 text-gray-700">Ichimoku Base Line (9, 26, 52, 26)</td>
+                            <td className="py-2 px-4 text-right font-medium text-gray-900">14.250</td>
+                            <td className="py-2 px-4 text-center font-medium text-green-600">TĂNG</td>
                           </tr>
                         </tbody>
                       </table>
