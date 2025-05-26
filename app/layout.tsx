@@ -3,7 +3,6 @@ import { Inter, Roboto_Mono } from "next/font/google";
 import "./globals.css";
 import Header from "@/components/layout/Header";
 import Footer from "@/components/layout/Footer";
-import Script from "next/script";
 import { ThemeProvider } from "next-themes";
 
 const inter = Inter({
@@ -39,9 +38,9 @@ export default function RootLayout({
           enableSystem
           disableTransitionOnChange
         >
-          <div className="flex flex-col flex-1 bg-orange-100/50">
+          <div className="flex flex-col flex-1">
             <Header />
-            <main className="flex-1 container py-6">{children}</main>
+            <main className="flex-1 bg-background container py-6">{children}</main>
             <Footer />
           </div>
         </ThemeProvider>

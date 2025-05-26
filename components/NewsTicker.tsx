@@ -6,13 +6,13 @@ import { Skeleton } from '@/components/ui/skeleton';
 
 // Import Swiper components and styles
 import { Swiper, SwiperSlide } from 'swiper/react';
-import { Navigation, Pagination, Autoplay, EffectFade, Scrollbar } from 'swiper/modules';
+import { Navigation, Pagination, Autoplay, EffectFade, Grid } from 'swiper/modules';
 import type { Swiper as SwiperType } from 'swiper';
 import 'swiper/css';
 import 'swiper/css/navigation';
 import 'swiper/css/pagination';
 import 'swiper/css/effect-fade';
-import 'swiper/css/scrollbar';
+import 'swiper/css/grid';
 
 interface ChatGPTResponse {
   id: number;
@@ -74,6 +74,30 @@ export function NewsTicker() {
     fetchMarketNews();
   }, []);
   
+  // Add custom styles for mobile grid layout
+  useEffect(() => {
+    const styles = `
+      @media (max-width: 767px) {
+        .news-ticker .swiper-wrapper {
+          height: auto !important;
+        }
+        
+        .news-ticker .swiper-slide {
+          height: auto !important;
+          margin-top: 0 !important;
+        }
+      }
+    `;
+    
+    const styleElement = document.createElement('style');
+    styleElement.innerHTML = styles;
+    document.head.appendChild(styleElement);
+    
+    return () => {
+      document.head.removeChild(styleElement);
+    };
+  }, []);
+  
   // Format date from API (ISO string) to local date
   const formatDate = (dateString: string) => {
     const date = new Date(dateString);
@@ -91,7 +115,7 @@ export function NewsTicker() {
   return (
     <div className="h-full flex flex-col news-ticker">
       <div className="flex justify-between items-center mb-4">
-        <h2 className="text-xl font-semibold text-primary">Thị trường chứng khoán</h2>
+        <h2 className="text-xl font-semibold text-primary">Tin tức thị trường</h2>
         <div className="flex items-center gap-4">
           <Link href="/tin-tuc" className="text-sm text-primary hover:underline flex items-center group">
             Xem tất cả
@@ -103,7 +127,7 @@ export function NewsTicker() {
       </div>
       
       {/* News ticker container with enhanced styling */}
-      <div className="flex-1">
+      <div className="flex-1 min-h-[500px] md:min-h-0">
         {loading ? (
           <div className="grid grid-cols-1 gap-4">
             {Array(3).fill(0).map((_, index) => (
@@ -123,19 +147,32 @@ export function NewsTicker() {
           </div>
         ) : gptResponses.length > 0 ? (
           <Swiper
-            modules={[Navigation, Pagination, Autoplay, EffectFade, Scrollbar]}
+            modules={[Navigation, Pagination, Autoplay, EffectFade, Grid]}
             spaceBetween={16}
             slidesPerView={1}
-            centeredSlides={true}
+            slidesPerGroup={1}
+            grid={{
+              rows: 3,
+              fill: "row"
+            }}
+            breakpoints={{
+              // When screen width is >= 768px (tablet/desktop)
+              768: {
+                grid: {
+                  rows: 1
+                },
+                slidesPerView: 1,
+                centeredSlides: true
+              }
+            }}
+            centeredSlides={false}
             loop={false}
-            direction="vertical"
             pagination={{ 
               clickable: true,
               el: '.news-ticker-pagination',
               bulletClass: 'inline-block w-2 h-2 bg-gray-300 rounded-full transition-all mx-1 cursor-pointer hover:bg-gray-400',
               bulletActiveClass: '!w-6 !bg-primary',
             }}
-            scrollbar={{ draggable: true, hide: false }}
             autoplay={{ delay: 10000, disableOnInteraction: false }}
             onSwiper={(swiper) => {
               swiperRef.current = swiper;
@@ -144,31 +181,12 @@ export function NewsTicker() {
               setActiveIndex(swiper.activeIndex);
             }}
             navigation={false}
-            className="h-full swiper-vertical-scroll"
-            breakpoints={{
-              // When window width is >= 1200px (large desktop)
-              1200: {
-                direction: 'vertical',
-                slidesPerView: 4,
-                spaceBetween: 10,
-              },
-              // When window width is >= 768px but < 1200px (medium desktop)
-              768: {
-                direction: 'vertical',
-                slidesPerView: 3,
-                spaceBetween: 10,
-              },
-              // When window width is < 768px (mobile)
-              0: {
-                direction: 'horizontal',
-                slidesPerView: 1,
-              }
-            }}
+            className="h-full"
           >
             {gptResponses.map((item) => (
-              <SwiperSlide key={item.id}>
-                <div className="p-3 bg-white border rounded-lg border-primary/50 bg-primary/5 transition-all duration-300 h-full overflow-auto">
-                  <p className="text-sm whitespace-pre-line line-clamp-4 sm:line-clamp-none">{item.response}</p>
+              <SwiperSlide className='mb-2' key={item.id}>
+                <div className="p-5 bg-white border rounded-lg border-primary/50 bg-primary/5 transition-all duration-300 h-full flex flex-col">
+                  <p className="text-sm whitespace-pre-line line-clamp-4 md:line-clamp-none flex-grow">{item.response}</p>
                   <div className="flex justify-end mt-2">
                     <span className="text-xs text-muted-foreground">
                       {item.date}
@@ -190,82 +208,6 @@ export function NewsTicker() {
         <div className="news-ticker-pagination flex justify-center mt-4"></div>
       )}
       
-      <style jsx global>{`
-        .swiper-vertical-scroll {
-          height: 480px;
-        }
-        
-        .swiper-vertical-scroll .swiper-pagination-bullet {
-          margin: 0 4px;
-        }
-        
-        .swiper-vertical-scroll .swiper-pagination-vertical {
-          right: 10px;
-          top: 50%;
-          transform: translateY(-50%);
-        }
-        
-        .swiper-vertical-scroll .swiper-scrollbar-vertical {
-          right: 5px;
-          width: 4px;
-        }
-        
-        .swiper-vertical-scroll .swiper-scrollbar-horizontal {
-          bottom: 5px;
-          height: 4px;
-        }
-        
-        /* Mobile styles */
-        @media (max-width: 768px) {
-          .swiper-vertical-scroll {
-            height: 250px;
-          }
-          
-          .news-ticker-pagination {
-            display: flex;
-            justify-content: center;
-          }
-        }
-        
-        /* Medium desktop styles */
-        @media (min-width: 769px) and (max-width: 1199px) {
-          .swiper-vertical-scroll {
-            height: 500px; /* Height for 3 items */
-          }
-          
-          .swiper-vertical-scroll .swiper-slide {
-            height: calc((100% - 20px) / 3) !important; /* Adjust height for 3 items with spacing */
-          }
-        }
-        
-        /* Large desktop styles */
-        @media (min-width: 1200px) {
-          .swiper-vertical-scroll {
-            height: 600px; /* Height for 4 items */
-          }
-          
-          .swiper-vertical-scroll .swiper-slide {
-            height: calc((100% - 30px) / 4) !important; /* Adjust height for 4 items with spacing */
-          }
-        }
-        
-        /* Common desktop styles for pagination */
-        @media (min-width: 769px) {
-          .news-ticker-pagination {
-            position: absolute;
-            right: 10px;
-            top: 50%;
-            transform: translateY(-50%);
-            display: flex;
-            flex-direction: column;
-            z-index: 10;
-          }
-          
-          .news-ticker-pagination .swiper-pagination-bullet {
-            margin: 4px 0;
-          }
-        }
-      `}</style>
     </div>
   );
 } 

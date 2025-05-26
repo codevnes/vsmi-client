@@ -88,107 +88,101 @@ export default function StockProfile({ symbol = "VNINDEX" }: StockProfileProps) 
 
   // Determine if stock is up or down
   const isPositive = stockData.profile.profit > 0;
-  
+
   return (
     <>
-     {/* Section 1: Thông tin cổ phiếu */}
-     <section aria-labelledby="stock-info-heading">
-            <Card>
-              <div className="absolute top-0 left-0 w-full h-1 bg-gradient-to-r from-blue-500 to-purple-600"></div>
-              <CardContent className="relative pt-8 pb-6 px-6">
-                <div className="space-y-7">
-                  {/* Stock Badge */}
-                  <div className="inline-flex items-center px-3 py-1 mb-4 text-xs font-medium rounded-full bg-gray-100 dark:bg-gray-700 text-gray-800 dark:text-gray-300">
-                    <Building2 className="h-3 w-3 mr-1.5" />
-                    {stockData.exchange || "N/A"} • {stockData.industry || "N/A"}
-                  </div>
-                
-                  {/* Header */}
-                  <div className="flex justify-between items-start">
-                    <div>
-                      <h1 className="text-3xl font-bold flex items-center gap-2 dark:text-white">
-                        {stockData.symbol}
-                      </h1>
-                      <div className="text-base mt-1 text-gray-500 dark:text-gray-400">
-                        {stockData.name}
-                      </div>
-                    </div>
-                    <div className="text-right">
-                      <div className="text-3xl font-bold dark:text-white tracking-tight">{stockData.profile.price.toLocaleString()}</div>
-                      <div className={`flex items-center justify-end px-3 py-1 rounded-lg mt-1 ${isPositive ? 'bg-green-50 dark:bg-green-900/20 text-green-600 dark:text-green-400' : 'bg-red-50 dark:bg-red-900/20 text-red-600 dark:text-red-400'}`}>
-                        {isPositive ? (
-                          <ArrowUp className="h-4 w-4 mr-1" />
-                        ) : (
-                          <ArrowDown className="h-4 w-4 mr-1" />
-                        )}
-                        <span className="font-medium">
-                          {stockData.profile.profit !== undefined ? stockData.profile.profit.toFixed(2) : '0.00'} 
-                          {stockData.profile.price > 0 && stockData.profile.profit !== undefined && (
-                            ` (${((stockData.profile.profit / (stockData.profile.price - stockData.profile.profit)) * 100).toFixed(2)}%)`
-                          )}
-                        </span>
-                      </div>
-                    </div>
-                  </div>
-                  
-                  {/* Key metrics */}
-                  <div className="grid grid-cols-2 md:grid-cols-4 gap-4">
-                    <div className="p-4 rounded-xl border border-gray-100 dark:border-gray-700 bg-white dark:bg-gray-800 shadow-sm">
-                      <div className="flex items-center justify-between mb-2">
-                        <div className="text-xs uppercase text-gray-500 dark:text-gray-400 font-medium tracking-wider">Khối lượng</div>
-                        <BarChart3 className="h-4 w-4 text-blue-500 dark:text-blue-400" />
-                      </div>
-                      <div className="text-lg font-semibold dark:text-white">{stockData.profile.volume !== undefined ? (stockData.profile.volume / 1000000).toFixed(2) : '0.00'}M</div>
-                    </div>
-                    
-                    <div className="p-4 rounded-xl border border-gray-100 dark:border-gray-700 bg-white dark:bg-gray-800 shadow-sm">
-                      <div className="flex items-center justify-between mb-2">
-                        <div className="text-xs uppercase text-gray-500 dark:text-gray-400 font-medium tracking-wider">P/E</div>
-                        <BarChart4 className="h-4 w-4 text-purple-500 dark:text-purple-400" />
-                      </div>
-                      <div className="text-lg font-semibold dark:text-white">{stockData.profile.pe !== undefined ? stockData.profile.pe.toFixed(2) : 'N/A'}</div>
-                    </div>
-                    
-                    <div className="p-4 rounded-xl border border-gray-100 dark:border-gray-700 bg-white dark:bg-gray-800 shadow-sm">
-                      <div className="flex items-center justify-between mb-2">
-                        <div className="text-xs uppercase text-gray-500 dark:text-gray-400 font-medium tracking-wider">EPS</div>
-                        <BarChart3 className="h-4 w-4 text-indigo-500 dark:text-indigo-400" />
-                      </div>
-                      <div className="text-lg font-semibold dark:text-white">{stockData.profile.eps !== undefined ? stockData.profile.eps.toFixed(2) : 'N/A'}</div>
-                    </div>
-                    
-                    <div className="p-4 rounded-xl border border-gray-100 dark:border-gray-700 bg-white dark:bg-gray-800 shadow-sm">
-                      <div className="flex items-center justify-between mb-2">
-                        <div className="text-xs uppercase text-gray-500 dark:text-gray-400 font-medium tracking-wider">ROE</div>
-                        <BarChart4 className="h-4 w-4 text-cyan-500 dark:text-cyan-400" />
-                      </div>
-                      <div className="text-lg font-semibold dark:text-white">{stockData.profile.roe !== undefined ? stockData.profile.roe.toFixed(2) : 'N/A'}%</div>
-                    </div>
-                  </div>
-                  
-                  {/* Description */}
-                  {stockData.description && (
-                    <div className="flex items-start gap-3 p-4 rounded-xl border border-blue-100 dark:border-blue-900/30 bg-gradient-to-r from-blue-50 to-indigo-50 dark:from-blue-900/10 dark:to-indigo-900/10">
-                      <div className="mt-0.5 p-1.5 rounded-full bg-blue-100 dark:bg-blue-800/30">
-                        <Info className="h-4 w-4 text-blue-600 dark:text-blue-400" />
-                      </div>
-                      <p className="text-sm text-gray-700 dark:text-gray-300">{stockData.description}</p>
-                    </div>
+      {/* Section 1: Thông tin cổ phiếu */}
+      <section aria-labelledby="stock-info-heading">
+        <div className="absolute top-0 left-0 w-full h-1 bg-gradient-to-r from-blue-500 to-purple-600"></div>
+        <div className="space-y-7">
+          {/* Stock Badge */}
+          <div className="inline-flex items-center px-3 py-1 mb-4 text-xs font-medium rounded-full bg-gray-100 dark:bg-gray-700 text-gray-800 dark:text-gray-300">
+            <Building2 className="h-3 w-3 mr-1.5" />
+            {stockData.exchange || "N/A"} • {stockData.industry || "N/A"}
+          </div>
+
+          {/* Header */}
+          <div className="flex justify-between items-start">
+            <div>
+              <h1 className="text-3xl font-bold flex items-center gap-2 dark:text-white">
+                {stockData.symbol}
+              </h1>
+              <div className="text-base mt-1 text-gray-500 dark:text-gray-400">
+                {stockData.name}
+              </div>
+            </div>
+            <div className="text-right">
+              <div className="text-3xl font-bold dark:text-white tracking-tight">{stockData.profile.price.toLocaleString()}</div>
+              <div className={`flex items-center justify-end px-3 py-1 rounded-lg mt-1 ${isPositive ? 'bg-green-50 dark:bg-green-900/20 text-green-600 dark:text-green-400' : 'bg-red-50 dark:bg-red-900/20 text-red-600 dark:text-red-400'}`}>
+                {isPositive ? (
+                  <ArrowUp className="h-4 w-4 mr-1" />
+                ) : (
+                  <ArrowDown className="h-4 w-4 mr-1" />
+                )}
+                <span className="font-medium">
+                  {stockData.profile.profit !== undefined ? stockData.profile.profit.toFixed(2) : '0.00'}
+                  {stockData.profile.price > 0 && stockData.profile.profit !== undefined && (
+                    ` (${((stockData.profile.profit / (stockData.profile.price - stockData.profile.profit)) * 100).toFixed(2)}%)`
                   )}
-                  
-                  {/* Performance indicator */}
-                  <div className="flex items-center gap-3 mt-2 pt-3 border-t border-gray-100 dark:border-gray-700">
-                    <div className="flex items-center justify-center p-1.5 rounded-full bg-gray-100 dark:bg-gray-700">
-                      <TrendingUp className="h-4 w-4 text-gray-600 dark:text-gray-400" />
-                    </div>
-                    <span className="text-sm text-gray-600 dark:text-gray-400">
-                      ROA: <span className="font-medium dark:text-gray-300">{stockData.profile.roa !== undefined ? stockData.profile.roa.toFixed(2) : 'N/A'}%</span>
-                    </span>
-                  </div>
-                </div>
-              </CardContent>
-            </Card>
-          </section>
+                </span>
+              </div>
+            </div>
+          </div>
+
+          {/* Key metrics */}
+          <div className="grid grid-cols-2 md:grid-cols-5 gap-4">
+            <div className="p-4 rounded-xl border border-gray-100 dark:border-gray-700 bg-white dark:bg-gray-800 shadow-sm">
+              <div className="flex items-center justify-between mb-2">
+                <div className="text-xs uppercase text-gray-500 dark:text-gray-400 font-medium tracking-wider">Khối lượng</div>
+                <BarChart3 className="h-4 w-4 text-blue-500 dark:text-blue-400" />
+              </div>
+              <div className="text-lg font-semibold dark:text-white">{stockData.profile.volume !== undefined ? (stockData.profile.volume / 1000000).toFixed(2) : '0.00'}M</div>
+            </div>
+
+            <div className="p-4 rounded-xl border border-gray-100 dark:border-gray-700 bg-white dark:bg-gray-800 shadow-sm">
+              <div className="flex items-center justify-between mb-2">
+                <div className="text-xs uppercase text-gray-500 dark:text-gray-400 font-medium tracking-wider">P/E</div>
+                <BarChart4 className="h-4 w-4 text-purple-500 dark:text-purple-400" />
+              </div>
+              <div className="text-lg font-semibold dark:text-white">{stockData.profile.pe !== undefined ? stockData.profile.pe.toFixed(2) : 'N/A'}</div>
+            </div>
+
+            <div className="p-4 rounded-xl border border-gray-100 dark:border-gray-700 bg-white dark:bg-gray-800 shadow-sm">
+              <div className="flex items-center justify-between mb-2">
+                <div className="text-xs uppercase text-gray-500 dark:text-gray-400 font-medium tracking-wider">EPS</div>
+                <BarChart3 className="h-4 w-4 text-indigo-500 dark:text-indigo-400" />
+              </div>
+              <div className="text-lg font-semibold dark:text-white">{stockData.profile.eps !== undefined ? stockData.profile.eps.toFixed(2) : 'N/A'}</div>
+            </div>
+
+            <div className="p-4 rounded-xl border border-gray-100 dark:border-gray-700 bg-white dark:bg-gray-800 shadow-sm">
+              <div className="flex items-center justify-between mb-2">
+                <div className="text-xs uppercase text-gray-500 dark:text-gray-400 font-medium tracking-wider">ROE</div>
+                <BarChart4 className="h-4 w-4 text-cyan-500 dark:text-cyan-400" />
+              </div>
+              <div className="text-lg font-semibold dark:text-white">{stockData.profile.roe !== undefined ? stockData.profile.roe.toFixed(2) : 'N/A'}%</div>
+            </div>
+
+            <div className="p-4 rounded-xl border border-gray-100 dark:border-gray-700 bg-white dark:bg-gray-800 shadow-sm">
+              <div className="flex items-center justify-between mb-2">
+                <div className="text-xs uppercase text-gray-500 dark:text-gray-400 font-medium tracking-wider">ROA</div>
+                <TrendingUp className="h-4 w-4 text-teal-500 dark:text-teal-400" />
+              </div>
+              <div className="text-lg font-semibold dark:text-white">{stockData.profile.roa !== undefined ? stockData.profile.roa.toFixed(2) : 'N/A'}%</div>
+            </div>
+          </div>
+
+          {/* Description */}
+          {stockData.description && (
+            <div className="flex items-start gap-3 p-4 rounded-xl border border-blue-100 dark:border-blue-900/30 bg-gradient-to-r from-blue-50 to-indigo-50 dark:from-blue-900/10 dark:to-indigo-900/10">
+              <div className="mt-0.5 p-1.5 rounded-full bg-blue-100 dark:bg-blue-800/30">
+                <Info className="h-4 w-4 text-blue-600 dark:text-blue-400" />
+              </div>
+              <p className="text-sm text-gray-700 dark:text-gray-300">{stockData.description}</p>
+            </div>
+          )}
+        </div>
+      </section>
     </>
   )
 }

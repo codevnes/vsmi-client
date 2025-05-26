@@ -97,18 +97,7 @@ export function NewsSlider() {
   
   return (
     <div className="relative news-slider">
-      <div className="flex justify-between items-center mb-5">
-        <h2 className="text-xl font-semibold text-primary">Tin tức mới nhất</h2>
-        <div className="flex items-center gap-4">
-          
-          <Link href="/tin-tuc" className="text-sm text-primary hover:underline flex items-center group">
-            Xem tất cả
-            <svg className="w-4 h-4 ml-1 group-hover:translate-x-1 transition-transform" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
-              <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 5l7 7-7 7" />
-            </svg>
-          </Link>
-        </div>
-      </div>
+     
       
       {loading ? (
         // Show skeleton loaders while loading

@@ -143,7 +143,7 @@ export default function TechnicalAnalysisCharts(props: { symbol: string }) {
         top: 3,
         left: 2,
         blur: 4,
-        opacity: 0.1
+        opacity: 0.15
       },
       toolbar: {
         show: false
@@ -154,10 +154,10 @@ export default function TechnicalAnalysisCharts(props: { symbol: string }) {
       palette: 'palette1'
     },
     grid: {
-      borderColor: '#2d3748',
+      borderColor: '#334155', // Lighter grid color for better visibility
       strokeDashArray: 3,
       row: {
-        colors: ['#1a2234', '#1e293b'],
+        colors: ['#1e1e2f', '#1e293b'],
         opacity: 0.5
       },
       xaxis: {
@@ -205,6 +205,14 @@ export default function TechnicalAnalysisCharts(props: { symbol: string }) {
         offsetX: 0,
         offsetY: 0,
       },
+      background: {
+        enabled: true,
+        borderRadius: 3,
+        foreColor: '#f8fafc',
+        padding: 4,
+        opacity: 0.9,
+        borderColor: '#475569'
+      },
     },
     legend: {
       position: 'top' as const,
@@ -216,7 +224,7 @@ export default function TechnicalAnalysisCharts(props: { symbol: string }) {
       fontWeight: 500,
       fontFamily: 'Inter, sans-serif',
       labels: {
-        colors: '#e2e8f0',
+        colors: '#f1f5f9',
         useSeriesColors: false
       },
       itemMargin: {
@@ -245,18 +253,20 @@ export default function TechnicalAnalysisCharts(props: { symbol: string }) {
       hover: {
         filter: {
           type: 'lighten' as const,
+          value: 0.15
         }
       },
       active: {
         allowMultipleDataPointsSelection: false,
         filter: {
           type: 'darken' as const,
+          value: 0.15
         }
       }
     },
     plotOptions: {
       bar: {
-        borderRadius: 0,
+        borderRadius: 2, // Slightly rounded bars
         columnWidth: '65%',
         distributed: false,
         rangeBarOverlap: true,
@@ -273,7 +283,7 @@ export default function TechnicalAnalysisCharts(props: { symbol: string }) {
       }
     },
     fill: {
-      opacity: 1,
+      opacity: 0.9, // Slightly more transparent for better visual effect
       type: 'solid',
       gradient: {
         shade: 'dark',
@@ -289,7 +299,7 @@ export default function TechnicalAnalysisCharts(props: { symbol: string }) {
     xaxis: {
       labels: {
         style: {
-          colors: '#94a3b8',
+          colors: '#cbd5e1', // Lighter color for better contrast
           fontSize: '11px'
         },
         trim: true,
@@ -306,7 +316,7 @@ export default function TechnicalAnalysisCharts(props: { symbol: string }) {
     yaxis: {
       labels: {
         style: {
-          colors: '#94a3b8',
+          colors: '#cbd5e1', // Lighter color for better contrast
           fontSize: '11px'
         },
         formatter: function(val: number) {
@@ -328,11 +338,11 @@ export default function TechnicalAnalysisCharts(props: { symbol: string }) {
       },
       background: {
         enabled: true,
-        foreColor: '#1a2234',
+        foreColor: '#f1f5f9',
         padding: 4,
         borderRadius: 2,
         borderWidth: 1,
-        borderColor: '#2d3748',
+        borderColor: '#475569',
         opacity: 0.9,
       },
       dropShadow: {
@@ -388,7 +398,7 @@ export default function TechnicalAnalysisCharts(props: { symbol: string }) {
       return (
         <div className="flex justify-center items-center h-[400px]">
           <div className="flex flex-col items-center">
-            <div className="animate-spin rounded-full h-12 w-12 border-t-2 border-b-2 border-blue-500 mb-3"></div>
+            <div className="animate-spin rounded-full h-12 w-12 border-t-2 border-b-2 border-blue-400 mb-3"></div>
             <p className="text-slate-300">Đang tải dữ liệu...</p>
           </div>
         </div>
@@ -419,7 +429,7 @@ export default function TechnicalAnalysisCharts(props: { symbol: string }) {
                   left: 1,
                   blur: 4,
                   opacity: 0.2,
-                  color: '#38bdf8'
+                  color: '#60a5fa'
                 }
               },
               xaxis: {
@@ -452,7 +462,7 @@ export default function TechnicalAnalysisCharts(props: { symbol: string }) {
                   }
                 }
               },
-              colors: ['#6366f1'],
+              colors: ['#93c5fd'], // Lighter blue for better visibility in dark mode
               dataLabels: {
                 ...commonOptions.dataLabels,
                 formatter: function(val: number) {
@@ -466,7 +476,7 @@ export default function TechnicalAnalysisCharts(props: { symbol: string }) {
                 ...commonOptions.plotOptions,
                 bar: {
                   ...commonOptions.plotOptions.bar,
-                  borderRadius: 0,
+                  borderRadius: 2,
                   columnWidth: '60%',
                 }
               }
@@ -498,7 +508,7 @@ export default function TechnicalAnalysisCharts(props: { symbol: string }) {
                   left: 1,
                   blur: 5,
                   opacity: 0.2,
-                  color: '#10b981'
+                  color: '#34d399'
                 }
               },
               xaxis: {
@@ -528,7 +538,7 @@ export default function TechnicalAnalysisCharts(props: { symbol: string }) {
                   }
                 }
               },
-              colors: ['#06b6d4', '#fcd34d'],
+              colors: ['#67e8f9', '#fde047'], // Lighter colors for cyan and yellow
               tooltip: {
                 ...commonOptions.tooltip,
                 y: {
@@ -569,7 +579,7 @@ export default function TechnicalAnalysisCharts(props: { symbol: string }) {
                   left: 1,
                   blur: 5,
                   opacity: 0.2,
-                  color: '#e11d48'
+                  color: '#fb7185'
                 }
               },
               stroke: {
@@ -632,10 +642,10 @@ export default function TechnicalAnalysisCharts(props: { symbol: string }) {
                   }
                 }
               ],
-              colors: ['#f43f5e', '#a855f7'],
+              colors: ['#fca5a5', '#d8b4fe'], // Lighter red and purple
               markers: {
                 size: [0, 5],
-                strokeColors: '#1a2234',
+                strokeColors: '#1e1e2f',
                 strokeWidth: 2,
                 hover: {
                   size: 7
@@ -687,7 +697,7 @@ export default function TechnicalAnalysisCharts(props: { symbol: string }) {
                   left: 1,
                   blur: 5,
                   opacity: 0.2,
-                  color: '#7c3aed'
+                  color: '#a78bfa'
                 }
               },
               xaxis: {
@@ -717,7 +727,7 @@ export default function TechnicalAnalysisCharts(props: { symbol: string }) {
                   }
                 }
               },
-              colors: ['#0ea5e9', '#8b5cf6'],
+              colors: ['#7dd3fc', '#c4b5fd'], // Lighter blue and purple
               tooltip: {
                 ...commonOptions.tooltip,
                 y: {
@@ -751,7 +761,7 @@ export default function TechnicalAnalysisCharts(props: { symbol: string }) {
       return (
         <div className="flex justify-center items-center h-[400px]">
           <div className="flex flex-col items-center">
-            <div className="animate-spin rounded-full h-12 w-12 border-t-2 border-b-2 border-blue-500 mb-3"></div>
+            <div className="animate-spin rounded-full h-12 w-12 border-t-2 border-b-2 border-blue-400 mb-3"></div>
             <p className="text-slate-300">Đang tải dữ liệu...</p>
           </div>
         </div>
@@ -807,7 +817,7 @@ export default function TechnicalAnalysisCharts(props: { symbol: string }) {
                   }
                 }
               },
-              colors: ['#38bdf8', '#4ade80'],
+              colors: ['#7dd3fc', '#86efac'], // Lighter sky blue and green
               tooltip: {
                 ...commonOptions.tooltip,
                 y: {
@@ -876,7 +886,7 @@ export default function TechnicalAnalysisCharts(props: { symbol: string }) {
                   }
                 }
               },
-              colors: ['#f43f5e', '#a855f7'],
+              colors: ['#fca5a5', '#d8b4fe'], // Lighter red and purple
               tooltip: {
                 ...commonOptions.tooltip,
                 y: {
@@ -946,7 +956,7 @@ export default function TechnicalAnalysisCharts(props: { symbol: string }) {
                   }
                 }
               },
-              colors: ['#10b981', '#f59e0b', '#3b82f6', '#ef4444'],
+              colors: ['#6ee7b7', '#fcd34d', '#93c5fd', '#fca5a5'], // Lighter green, yellow, blue, red
               plotOptions: {
                 ...commonOptions.plotOptions,
                 bar: {
@@ -956,7 +966,7 @@ export default function TechnicalAnalysisCharts(props: { symbol: string }) {
               },
               markers: {
                 size: [0, 0, 5, 5],
-                strokeColors: '#1a2234',
+                strokeColors: '#1e1e2f',
                 strokeWidth: 2,
                 hover: {
                   size: 7
@@ -1014,7 +1024,7 @@ export default function TechnicalAnalysisCharts(props: { symbol: string }) {
                   left: 1,
                   blur: 5,
                   opacity: 0.2,
-                  color: '#ec4899'
+                  color: '#f9a8d4'
                 }
               },
               xaxis: {
@@ -1044,7 +1054,7 @@ export default function TechnicalAnalysisCharts(props: { symbol: string }) {
                   }
                 }
               },
-              colors: ['#ec4899', '#8b5cf6'],
+              colors: ['#f9a8d4', '#c4b5fd'], // Lighter pink and purple
               tooltip: {
                 ...commonOptions.tooltip,
                 y: {
